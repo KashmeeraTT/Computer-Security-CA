@@ -1,0 +1,22 @@
+<?php
+// Secure code using prepared statements
+$username = $_POST['username']; // Get username from user form input
+$password = $_POST['password']; // Get password from user form input
+
+// Prepare SQL statement with placeholders for user input
+$stmt = $conn->prepare("SELECT * FROM users WHERE username = ? AND password = ?");
+$stmt->bind_param("ss", $username, $password); // Bind user input securely
+
+// Execute the prepared statement
+$stmt->execute();
+
+// Get result set from the prepared statement
+$result = $stmt->get_result();
+
+// Check if any matching rows are found (user found)
+if ($result->num_rows > 0) {
+    echo "Login successful";
+} else {
+    echo "Login failed";
+}
+?>

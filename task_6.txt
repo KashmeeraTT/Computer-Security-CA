@@ -1,0 +1,16 @@
+<?php
+// Vulnerable code: directly inserts user input into SQL query
+$username = $_POST['username']; // Username from user form input
+$password = $_POST['password']; // Password from user form input
+
+// Unsafe query that concatenates user input without sanitization
+$sql = "SELECT * FROM users WHERE username = '$username' AND password = '$password'";
+$result = mysqli_query($conn, $sql); // Executes the query with unsanitized input
+
+// Check if the query returns any rows (user found)
+if (mysqli_num_rows($result) > 0) {
+    echo "Login successful";
+} else {
+    echo "Login failed";
+}
+?>
